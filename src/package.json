@@ -36,7 +36,6 @@
     "konva": "^9.2.0",
     "lucide-react": "^0.244.0",
     "next": "^13.4.9",
-    "next-auth": "0.0.0-manual.e65faa1c",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
     "react-day-picker": "^8.7.1",

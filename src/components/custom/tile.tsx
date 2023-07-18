@@ -49,7 +49,6 @@ export const Tile: FC<TileProps> = forwardRef(({ x, y, size }, ref) => {
       fill={Konva.Util.getRandomColor()}
       stroke="black"
       strokeWidth={2}
-      shadowBlur={5}
       //@ts-ignore
       ref={ref}
     />

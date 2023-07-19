@@ -4,7 +4,7 @@ import { forwardRef } from "react"
 import * as Konva from "konva"
 import { Rect } from "react-konva"
 
-interface TileProps {
+export interface TileProps {
   x: number
   y: number
   size: number

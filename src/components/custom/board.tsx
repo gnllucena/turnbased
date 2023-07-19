@@ -6,33 +6,36 @@ import { Layer, Stage } from "react-konva"
 
 import { Tile } from "./tile"
 
-const NUMBER_OF_ROWS = 80
-const NUMBER_OF_TILES_PER_ROW = 80
-const SIZE = 80
 const PADDING = 500
-const PAGE_HEIGHT = NUMBER_OF_ROWS * SIZE + PADDING
-const PAGE_WIDTH = NUMBER_OF_TILES_PER_ROW * SIZE + PADDING
 
-function getRows() {
+function getRows(
+  numberOfRows: number,
+  numberOfTilesPerRow: number,
+  tileSize: number
+) {
   const rows = []
 
-  for (let i = 0; i < NUMBER_OF_ROWS; i++) {
-    rows.push(getTiles(i))
+  for (let i = 0; i < numberOfRows; i++) {
+    rows.push(getTiles(i, numberOfTilesPerRow, tileSize))
   }
 
   return rows
 }
 
-function getTiles(rowNumber: number) {
+function getTiles(
+  rowNumber: number,
+  numberOfTilesPerRow: number,
+  tileSize: number
+) {
   const tiles = []
 
-  for (let i = 0; i < NUMBER_OF_TILES_PER_ROW; i++) {
+  for (let i = 0; i < numberOfTilesPerRow; i++) {
     tiles.push(
       <Tile
         key={`${rowNumber}${i}`}
-        x={i * SIZE}
-        y={rowNumber * SIZE}
-        size={SIZE}
+        x={i * tileSize}
+        y={rowNumber * tileSize}
+        size={tileSize}
       />
     )
   }
@@ -58,7 +61,17 @@ function onWheel(
   stage.y(-dy)
 }
 
-export function Board() {
+interface BoardProps {
+  numberOfTilesPerRow: number
+  numberOfRows: number
+  tileSize: number
+}
+
+export function Board({
+  numberOfTilesPerRow,
+  numberOfRows,
+  tileSize,
+}: BoardProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<Konva.default.Stage>(null)
 
@@ -66,11 +79,11 @@ export function Board() {
     <div ref={containerRef} style={{ maxHeight: "10px" }}>
       <Stage
         ref={stageRef}
-        width={PAGE_WIDTH}
-        height={PAGE_HEIGHT}
+        width={numberOfRows * tileSize + PADDING}
+        height={numberOfTilesPerRow * tileSize + PADDING}
         onWheel={() => onWheel(containerRef, stageRef)}
       >
-        <Layer>{getRows()}</Layer>
+        <Layer>{getRows(numberOfRows, numberOfTilesPerRow, tileSize)}</Layer>
       </Stage>
     </div>
   )

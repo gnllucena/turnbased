@@ -12,5 +12,5 @@ const Board = dynamic(
 ) as typeof BoardType
 
 export default function Page() {
-  return <Board />
+  return <Board numberOfRows={80} numberOfTilesPerRow={80} tileSize={80} />
 }

@@ -49,8 +49,8 @@ export function Board({
       >
         <Stage
           ref={stageRef}
-          width={window.outerWidth}
-          height={window.outerHeight}
+          width={window.innerWidth + PADDING * 2}
+          height={window.innerHeight + PADDING * 2}
           onWheel={() => {
             const container = containerRef.current
             const stage = stageRef.current

@@ -1,16 +1,10 @@
 "use client"
 
-import {
-  ForwardRefExoticComponent,
-  MutableRefObject,
-  RefAttributes,
-  useRef,
-} from "react"
+import { useRef } from "react"
 import dynamic from "next/dynamic"
-import * as Konva from "konva"
 import { Rect } from "konva/lib/shapes/Rect"
 
-import { Tile, TileProps } from "@/components/custom/tile"
+import { TileProps } from "@/components/custom/tile"
 
 import { Board as BoardType } from "../components/custom/board"
 
@@ -35,8 +29,11 @@ export default function Page() {
 
   for (let x = 0; x < numberOfRows; x++) {
     for (let y = 0; y < numberOfTilesPerRow; y++) {
-      tiles.current.set(`${x},${y}`, {
+      const id = `${x},${y}`
+
+      tiles.current.set(id, {
         props: {
+          id: id,
           x: x * tileSize,
           y: y * tileSize,
           size: tileSize,

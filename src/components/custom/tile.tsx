@@ -5,15 +5,17 @@ import * as Konva from "konva"
 import { Rect } from "react-konva"
 
 export interface TileProps {
+  id: string
   x: number
   y: number
   size: number
 }
 
 export const Tile = forwardRef<Konva.default.Rect, TileProps>(
-  ({ x, y, size }, ref) => {
+  ({ id, x, y, size }, ref) => {
     return (
       <Rect
+        id={id}
         x={x}
         y={y}
         width={size}

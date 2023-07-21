@@ -1,7 +1,7 @@
 "use client"
 
 import { MutableRefObject, useRef } from "react"
-import * as Konva from "konva"
+import Konva from "konva"
 import { Layer, Stage } from "react-konva"
 
 import { MappingProps } from "@/app/page"
@@ -21,9 +21,8 @@ export function Board({
   tileSize,
   tiles,
 }: BoardProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const stageRef = useRef<Konva.default.Stage>(null)
-
+  const containerRef = useRef<HTMLDivElement>(null!)
+  const stageRef = useRef<Konva.Stage>(null!)
   const padding = 500
 
   return (
@@ -50,8 +49,6 @@ export function Board({
             const container = containerRef.current
             const stage = stageRef.current
 
-            if (container === null || stage === null) return
-
             const dx = container.scrollLeft - padding
             const dy = container.scrollTop - padding
 
@@ -65,11 +62,12 @@ export function Board({
 
             // const position = tile?.ref?.getPosition()
             // const id = tile?.ref?.attrs["id"]
+            // tile?.ref?.setAttrs({})
 
-            tile?.ref?.fill(Konva.default.Util.getRandomColor())
+            tile?.ref?.fill(Konva.Util.getRandomColor())
           }}
         >
-          <Layer listening={false}>
+          <Layer>
             {Array.from(tiles.current.entries()).map(([key, value]) => (
               <Tile
                 key={key}
@@ -77,6 +75,9 @@ export function Board({
                 x={value.props.x}
                 y={value.props.y}
                 size={value.props.size}
+                fill={value.props.fill}
+                stroke={value.props.stroke}
+                text={value.props.text}
                 ref={(el) => {
                   tiles.current.set(key, { ...value, ref: el })
                 }}

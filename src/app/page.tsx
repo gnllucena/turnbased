@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import dynamic from "next/dynamic"
+import Konva from "konva"
 import { Rect } from "konva/lib/shapes/Rect"
 
 import { TileProps } from "@/components/custom/tile"
@@ -27,6 +28,10 @@ export default function Page() {
   const tileSize = 80
   const tiles = useRef(new Map<string, MappingProps>())
 
+  const fill = Konva.Util.getRandomColor()
+  const stroke = Konva.Util.getRandomColor()
+  const text = Konva.Util.getRandomColor()
+
   for (let x = 0; x < numberOfTilesPerRow; x++) {
     for (let y = 0; y < numberOfRows; y++) {
       const id = `${x},${y}`
@@ -37,6 +42,9 @@ export default function Page() {
           x: x * tileSize,
           y: y * tileSize,
           size: tileSize,
+          fill: fill,
+          stroke: stroke,
+          text: text,
         },
         edges: new Set(),
         ref: null,
@@ -45,11 +53,21 @@ export default function Page() {
   }
 
   return (
-    <Board
-      numberOfRows={numberOfRows}
-      numberOfTilesPerRow={numberOfTilesPerRow}
-      tileSize={tileSize}
-      tiles={tiles}
-    />
+    <>
+      {/* <LayerActions /> */}
+      {/* <LayerDM /> */}
+      {/* <LayerCTB /> */}
+      {/* <LayerPlayers /> */}
+      {/* <LayerCommandCenter /> */}
+      {/* <LayerDelimeters /> */}
+      {/* <LayerImage /> */}
+
+      <Board
+        numberOfRows={numberOfRows}
+        numberOfTilesPerRow={numberOfTilesPerRow}
+        tileSize={tileSize}
+        tiles={tiles}
+      />
+    </>
   )
 }

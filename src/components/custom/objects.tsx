@@ -4,7 +4,22 @@ import { forwardRef } from "react"
 import Konva from "konva"
 import { Rect, Text } from "react-konva"
 
-import { CharOnCanvas, TileOnCanvas } from "./board"
+export interface ObjectOnCanvas {
+  id: string
+  x: number
+  y: number
+}
+
+export interface CharOnCanvas extends ObjectOnCanvas {
+  text: string
+  color: string
+}
+
+export interface TileOnCanvas extends ObjectOnCanvas {
+  fill: string
+  borders: string
+  size: number
+}
 
 export const Char = forwardRef<Konva.Text, CharOnCanvas>((props, ref) => {
   const padding = 10

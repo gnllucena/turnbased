@@ -81,12 +81,13 @@ export function Board({
               <>
                 <Tile
                   key={key}
-                  id={value.tiles.id}
-                  x={value.tiles.x}
-                  y={value.tiles.y}
-                  size={value.tiles.size}
-                  fill={value.tiles.fill}
-                  borders={value.tiles.borders}
+                  {...value.tiles}
+                  // id={value.tiles.id}
+                  // x={value.tiles.x}
+                  // y={value.tiles.y}
+                  // size={value.tiles.size}
+                  // fill={value.tiles.fill}
+                  // borders={value.tiles.borders}
                   ref={(el) => {
                     tiles.current.set(key, { ...value, ref: el })
                   }}

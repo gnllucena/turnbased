@@ -2,11 +2,37 @@
 
 import { MutableRefObject, useRef } from "react"
 import Konva from "konva"
+import { Rect } from "konva/lib/shapes/Rect"
 import { Layer, Stage } from "react-konva"
 
-import { tiles } from "@/app/page"
-
 import { Char, Tile } from "./tile"
+
+export interface ObjectOnCanvas {
+  id: string
+  x: number
+  y: number
+}
+
+export interface CharOnCanvas extends ObjectOnCanvas {
+  text: string
+  color: string
+  fontSize: number
+}
+
+export interface TileOnCanvas extends ObjectOnCanvas {
+  fill: string
+  borders: string
+  size: number
+}
+
+export type tiles = MutableRefObject<Map<string, TilesProps>>
+
+export interface TilesProps {
+  tiles: TileOnCanvas
+  chars: CharOnCanvas
+  edges: Set<string>
+  ref: Rect | null
+}
 
 interface BoardProps {
   numberOfTilesPerRow: number
@@ -82,24 +108,11 @@ export function Board({
                 <Tile
                   key={key}
                   {...value.tiles}
-                  // id={value.tiles.id}
-                  // x={value.tiles.x}
-                  // y={value.tiles.y}
-                  // size={value.tiles.size}
-                  // fill={value.tiles.fill}
-                  // borders={value.tiles.borders}
                   ref={(el) => {
                     tiles.current.set(key, { ...value, ref: el })
                   }}
                 />
-                <Char
-                  id={value.chars.id}
-                  x={value.chars.x}
-                  y={value.chars.y}
-                  color={value.chars.color}
-                  fontSize={value.chars.fontSize}
-                  text={value.chars.text}
-                />
+                <Char key={key} {...value.chars} />
               </>
             ))}
           </Layer>

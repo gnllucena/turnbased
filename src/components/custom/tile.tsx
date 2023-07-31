@@ -4,9 +4,9 @@ import { forwardRef } from "react"
 import Konva from "konva"
 import { Rect, Text } from "react-konva"
 
-import { CharProps, TileProps } from "@/app/page"
+import { CharOnCanvas, TileOnCanvas } from "@/app/page"
 
-export const Char = forwardRef<Konva.Text, CharProps>((props, ref) => {
+export const Char = forwardRef<Konva.Text, CharOnCanvas>((props, ref) => {
   const padding = 10
 
   return (
@@ -23,7 +23,7 @@ export const Char = forwardRef<Konva.Text, CharProps>((props, ref) => {
 
 Char.displayName = "Char"
 
-export const Tile = forwardRef<Konva.Rect, TileProps>((props, ref) => {
+export const Tile = forwardRef<Konva.Rect, TileOnCanvas>((props, ref) => {
   return (
     <Rect
       id={props.id}

@@ -1,11 +1,10 @@
 "use client"
 
-import { MutableRefObject, useRef } from "react"
+import { useRef } from "react"
 import dynamic from "next/dynamic"
 import Konva from "konva"
-import { Rect } from "konva/lib/shapes/Rect"
 
-import { Board as BoardType } from "../components/custom/board"
+import { Board as BoardType, TilesProps } from "../components/custom/board"
 
 const Board = dynamic(
   () => import("../components/custom/board").then(({ Board }) => Board),
@@ -14,43 +13,12 @@ const Board = dynamic(
   }
 ) as typeof BoardType
 
-export interface CharProps {
-  id: string
-  x: number
-  y: number
-  text: string
-  color: string
-  fontSize: number
-}
-
-export interface TileProps {
-  id: string
-  x: number
-  y: number
-  fill: string
-  borders: string
-  size: number
-} // extends TileExtensionProps
-
-// interface TileExtensionProps {
-//   win: string
-// }
-
-export interface MappingProps {
-  tiles: TileProps
-  chars: CharProps
-  edges: Set<string>
-  ref: Rect | null
-}
-
-export type tiles = MutableRefObject<Map<string, MappingProps>>
-
 export default function Page() {
-  const numberOfTilesPerRow = 40
-  const numberOfRows = 70
+  const numberOfTilesPerRow = 30
+  const numberOfRows = 20
   const tileSize = 80
   const padding = 500
-  const tiles = useRef(new Map<string, MappingProps>())
+  const tiles = useRef(new Map<string, TilesProps>())
 
   const fill = Konva.Util.getRandomColor()
   const stroke = Konva.Util.getRandomColor()

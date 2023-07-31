@@ -4,7 +4,7 @@ import { MutableRefObject, useRef } from "react"
 import Konva from "konva"
 import { Layer, Stage } from "react-konva"
 
-import { MappingProps } from "@/app/page"
+import { tiles } from "@/app/page"
 
 import { Char, Tile } from "./tile"
 
@@ -12,18 +12,46 @@ interface BoardProps {
   numberOfTilesPerRow: number
   numberOfRows: number
   tileSize: number
-  tiles: MutableRefObject<Map<string, MappingProps>>
+  padding: number
+  tiles: tiles
+}
+
+function print(tiles: tiles) {
+  const tile = tiles.current.get("0,0")
+
+  // const position = tile?.ref?.getPosition()
+  // const id = tile?.ref?.attrs["id"]
+  // tile?.ref?.setAttrs({})
+
+  tile?.ref?.fill(Konva.Util.getRandomColor())
+}
+
+function scrollCanvas(
+  containerRef: MutableRefObject<HTMLDivElement>,
+  stageRef: MutableRefObject<Konva.Stage>,
+  padding: number
+) {
+  const container = containerRef.current
+  const stage = stageRef.current
+
+  const dx = container.scrollLeft - padding
+  const dy = container.scrollTop - padding
+
+  stage.container().style.transform = `translate(${dx}px, ${dy}px)`
+
+  stage.x(-dx)
+  stage.y(-dy)
 }
 
 export function Board({
   numberOfTilesPerRow,
   numberOfRows,
   tileSize,
+  padding,
   tiles,
 }: BoardProps) {
   const containerRef = useRef<HTMLDivElement>(null!)
   const stageRef = useRef<Konva.Stage>(null!)
-  const padding = 500
 
   return (
     <div
@@ -45,27 +73,8 @@ export function Board({
           ref={stageRef}
           width={window.innerWidth + padding * 2}
           height={window.innerHeight + padding * 2}
-          onWheel={() => {
-            const container = containerRef.current
-            const stage = stageRef.current
-
-            const dx = container.scrollLeft - padding
-            const dy = container.scrollTop - padding
-
-            stage.container().style.transform = `translate(${dx}px, ${dy}px)`
-
-            stage.x(-dx)
-            stage.y(-dy)
-          }}
-          onClick={() => {
-            const tile = tiles.current.get("0,0")
-
-            // const position = tile?.ref?.getPosition()
-            // const id = tile?.ref?.attrs["id"]
-            // tile?.ref?.setAttrs({})
-
-            tile?.ref?.fill(Konva.Util.getRandomColor())
-          }}
+          onWheel={() => scrollCanvas(containerRef, stageRef, padding)}
+          onClick={() => print(tiles)}
         >
           <Layer>
             {Array.from(tiles.current.entries()).map(([key, value]) => (

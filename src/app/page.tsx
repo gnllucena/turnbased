@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { MutableRefObject, useRef } from "react"
 import dynamic from "next/dynamic"
 import Konva from "konva"
 import { Rect } from "konva/lib/shapes/Rect"
@@ -43,10 +43,13 @@ export interface MappingProps {
   ref: Rect | null
 }
 
+export type tiles = MutableRefObject<Map<string, MappingProps>>
+
 export default function Page() {
   const numberOfTilesPerRow = 40
   const numberOfRows = 70
   const tileSize = 80
+  const padding = 500
   const tiles = useRef(new Map<string, MappingProps>())
 
   const fill = Konva.Util.getRandomColor()
@@ -97,6 +100,7 @@ export default function Page() {
         numberOfTilesPerRow={numberOfTilesPerRow}
         tileSize={tileSize}
         tiles={tiles}
+        padding={padding}
       />
     </>
   )

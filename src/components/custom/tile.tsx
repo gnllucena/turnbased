@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react"
 import Konva from "konva"
-import { Rect, Shape, Text } from "react-konva"
+import { Rect, Text } from "react-konva"
 
 import { CharProps, TileProps } from "@/app/page"
 

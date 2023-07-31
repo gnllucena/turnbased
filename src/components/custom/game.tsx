@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import Konva from "konva"
 
-import { Board, Tiles } from "./board"
+import { Board, TilesProps } from "./board"
 
 // const Board = dynamic(
 //     () => import("../components/custom/board").then(({ Board }) => Board),
@@ -17,7 +17,8 @@ export function Game() {
   const numberOfRows = 20
   const square = 80
   const padding = 500
-  const mapping = useRef<Tiles>(null!)
+  // const mapping = useRef<Tiles>(null!) => async/await is not yet supported in Client Components
+  const mapping = useRef(new Map<string, TilesProps>())
 
   const fill = Konva.Util.getRandomColor()
   const stroke = Konva.Util.getRandomColor()

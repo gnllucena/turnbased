@@ -5,11 +5,13 @@ import Konva from "konva"
 import { Rect } from "konva/lib/shapes/Rect"
 import { Layer, Stage } from "react-konva"
 
-import { Char, CharOnCanvas, Tile, TileOnCanvas } from "./objects"
+import { CharOnCanvas, Tile, TileOnCanvas } from "./objects"
 
-export type Tiles = Map<string, TilesProps>
+type Tiles = Map<string, TilesProps>
 
-interface TilesProps {
+export type tiles = MutableRefObject<Map<string, TilesProps>>
+
+export interface TilesProps {
   tiles: TileOnCanvas
   chars: CharOnCanvas
   edges: Set<string>

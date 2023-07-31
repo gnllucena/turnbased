@@ -25,24 +25,25 @@ export interface TileOnCanvas extends ObjectOnCanvas {
   size: number
 }
 
-export type tiles = MutableRefObject<Map<string, TilesProps>>
-
-export interface TilesProps {
-  tiles: TileOnCanvas
-  chars: CharOnCanvas
-  edges: Set<string>
-  ref: Rect | null
-}
+export type Tiles = Map<
+  string,
+  {
+    tiles: TileOnCanvas
+    chars: CharOnCanvas
+    edges: Set<string>
+    ref: Rect | null
+  }
+>
 
 interface BoardProps {
   numberOfTilesPerRow: number
   numberOfRows: number
   tileSize: number
   padding: number
-  tiles: tiles
+  tiles: MutableRefObject<Tiles>
 }
 
-function print(tiles: tiles) {
+function print(tiles: MutableRefObject<Tiles>) {
   const tile = tiles.current.get("0,0")
 
   // const position = tile?.ref?.getPosition()

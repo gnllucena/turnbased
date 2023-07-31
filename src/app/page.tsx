@@ -4,7 +4,7 @@ import { useRef } from "react"
 import dynamic from "next/dynamic"
 import Konva from "konva"
 
-import { Board as BoardType, TilesProps } from "../components/custom/board"
+import { Board as BoardType, Tiles } from "../components/custom/board"
 
 const Board = dynamic(
   () => import("../components/custom/board").then(({ Board }) => Board),
@@ -18,7 +18,7 @@ export default function Page() {
   const numberOfRows = 20
   const tileSize = 80
   const padding = 500
-  const tiles = useRef(new Map<string, TilesProps>())
+  const mapping = useRef<Tiles>(null!)
 
   const fill = Konva.Util.getRandomColor()
   const stroke = Konva.Util.getRandomColor()
@@ -28,7 +28,7 @@ export default function Page() {
     for (let y = 0; y < numberOfRows; y++) {
       const id = `${x},${y}`
 
-      tiles.current.set(id, {
+      mapping.current.set(id, {
         tiles: {
           id: id,
           x: x * tileSize,
@@ -67,7 +67,7 @@ export default function Page() {
         numberOfRows={numberOfRows}
         numberOfTilesPerRow={numberOfTilesPerRow}
         tileSize={tileSize}
-        tiles={tiles}
+        tiles={mapping}
         padding={padding}
       />
     </>

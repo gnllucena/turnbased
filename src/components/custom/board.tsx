@@ -2,7 +2,7 @@
 
 import { MutableRefObject, useRef } from "react"
 import * as Konva from "konva"
-import { Layer, Stage, Text } from "react-konva"
+import { Layer, Stage } from "react-konva"
 
 import { MappingProps } from "@/app/page"
 
@@ -24,12 +24,7 @@ export function Board({
   const containerRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<Konva.default.Stage>(null)
 
-  const PADDING = 500
-  //   const WIDTH = 3000
-  //   const HEIGHT = 3000
-
-  const WIDTH = 9000
-  const HEIGHT = 9000
+  const padding = 500
 
   return (
     <div
@@ -38,28 +33,27 @@ export function Board({
         width: "calc(100%)",
         height: "calc(100vh)",
         overflow: "auto",
-        border: "1px solid grey",
       }}
     >
       <div
         style={{
-          width: `${WIDTH + PADDING * 2}px`,
-          height: `${HEIGHT + PADDING * 2}px`,
+          width: `${numberOfTilesPerRow * tileSize}px`,
+          height: `${numberOfRows * tileSize}px`,
           overflow: "hidden",
         }}
       >
         <Stage
           ref={stageRef}
-          width={window.innerWidth + PADDING * 2}
-          height={window.innerHeight + PADDING * 2}
+          width={window.innerWidth + padding * 2}
+          height={window.innerHeight + padding * 2}
           onWheel={() => {
             const container = containerRef.current
             const stage = stageRef.current
 
             if (container === null || stage === null) return
 
-            const dx = container.scrollLeft - PADDING
-            const dy = container.scrollTop - PADDING
+            const dx = container.scrollLeft - padding
+            const dy = container.scrollTop - padding
 
             stage.container().style.transform = `translate(${dx}px, ${dy}px)`
 
@@ -69,16 +63,13 @@ export function Board({
           onClick={() => {
             const tile = tiles.current.get("0,0")
 
-            // change camera on turn start
             // const position = tile?.ref?.getPosition()
-
-            // get id to get props on map
-            // console.log(tile?.ref?.attrs["id"])
+            // const id = tile?.ref?.attrs["id"]
 
             tile?.ref?.fill(Konva.default.Util.getRandomColor())
           }}
         >
-          <Layer>
+          <Layer listening={false}>
             {Array.from(tiles.current.entries()).map(([key, value]) => (
               <Tile
                 key={key}

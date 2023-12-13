@@ -21,12 +21,12 @@ export const Tile = forwardRef<Konva.default.Rect, TileProps>(
           y={y}
           width={size}
           height={size}
-          fill={Konva.default.Util.getRandomColor()}
+          fill={"white"}
           stroke="black"
           strokeWidth={2}
           ref={ref}
-        ></Rect>
-        <Text text={id} fontSize={40} fill="#FFF" x={x} y={y} />
+        />
+        <Text text={id} fontSize={25} fill="#000" x={x} y={y} />
       </>
     )
   }

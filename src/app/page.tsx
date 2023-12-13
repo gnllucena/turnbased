@@ -22,13 +22,13 @@ export interface MappingProps {
 }
 
 export default function Page() {
-  const numberOfTilesPerRow = 80
-  const numberOfRows = 80
+  const numberOfTilesPerRow = 40
+  const numberOfRows = 70
   const tileSize = 80
   const tiles = useRef(new Map<string, MappingProps>())
 
-  for (let x = 0; x < numberOfRows; x++) {
-    for (let y = 0; y < numberOfTilesPerRow; y++) {
+  for (let x = 0; x < numberOfTilesPerRow; x++) {
+    for (let y = 0; y < numberOfRows; y++) {
       const id = `${x},${y}`
 
       tiles.current.set(id, {

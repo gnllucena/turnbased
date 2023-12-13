@@ -5,8 +5,6 @@ import dynamic from "next/dynamic"
 import Konva from "konva"
 import { Rect } from "konva/lib/shapes/Rect"
 
-import { TileProps } from "@/components/custom/tile"
-
 import { Board as BoardType } from "../components/custom/board"
 
 const Board = dynamic(
@@ -16,8 +14,31 @@ const Board = dynamic(
   }
 ) as typeof BoardType
 
+export interface CharProps {
+  id: string
+  x: number
+  y: number
+  text: string
+  color: string
+  fontSize: number
+}
+
+export interface TileProps {
+  id: string
+  x: number
+  y: number
+  fill: string
+  borders: string
+  size: number
+} // extends TileExtensionProps
+
+// interface TileExtensionProps {
+//   win: string
+// }
+
 export interface MappingProps {
-  props: TileProps
+  tiles: TileProps
+  chars: CharProps
   edges: Set<string>
   ref: Rect | null
 }
@@ -30,21 +51,28 @@ export default function Page() {
 
   const fill = Konva.Util.getRandomColor()
   const stroke = Konva.Util.getRandomColor()
-  const text = Konva.Util.getRandomColor()
+  const char = Konva.Util.getRandomColor()
 
   for (let x = 0; x < numberOfTilesPerRow; x++) {
     for (let y = 0; y < numberOfRows; y++) {
       const id = `${x},${y}`
 
       tiles.current.set(id, {
-        props: {
+        tiles: {
           id: id,
           x: x * tileSize,
           y: y * tileSize,
           size: tileSize,
           fill: fill,
-          stroke: stroke,
-          text: text,
+          borders: stroke,
+        },
+        chars: {
+          id: id,
+          x: x * tileSize,
+          y: y * tileSize,
+          color: char,
+          fontSize: 25,
+          text: "O-|=<",
         },
         edges: new Set(),
         ref: null,
@@ -54,10 +82,12 @@ export default function Page() {
 
   return (
     <>
-      {/* <LayerActions /> */}
-      {/* <LayerDM /> */}
+      {/* Create feature flags to enable progres */}
+      {/* <LayerPlayerActions /> */}
+      {/* <LayerDungeonMasterActions /> */}
       {/* <LayerCTB /> */}
-      {/* <LayerPlayers /> */}
+      {/* <LayerParty /> -> for party-only effects */}
+      {/* <LayerEnemies /> -> for only-enemy efects */}
       {/* <LayerCommandCenter /> */}
       {/* <LayerDelimeters /> */}
       {/* <LayerImage /> */}

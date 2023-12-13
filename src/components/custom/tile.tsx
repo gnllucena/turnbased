@@ -2,48 +2,52 @@
 
 import { forwardRef } from "react"
 import Konva from "konva"
-import { Rect, Text } from "react-konva"
+import { Rect, Shape, Text } from "react-konva"
 
-export interface TileProps {
-  id: string
-  x: number
-  y: number
-  fill: string
-  stroke: string
-  size: number
-  text: string
-}
+import { CharProps, TileProps } from "@/app/page"
 
-export const Tile = forwardRef<Konva.Rect, TileProps>(
-  ({ id, x, y, fill, stroke, size, text }, ref) => {
-    return (
-      <>
-        <Rect
-          id={id}
-          x={x}
-          y={y}
-          width={size}
-          height={size}
-          fill={fill}
-          stroke={stroke}
-          strokeWidth={2}
-          onMouseEnter={(e) => {
-            //todo: fix. not working
-            const target = e.target
-            const stage = target.getStage()
+export const Char = forwardRef<Konva.Text, CharProps>((props, ref) => {
+  const padding = 10
 
-            if (stage === null) return
+  return (
+    <Text
+      text={props.id}
+      fontSize={25}
+      fill={props.text}
+      x={props.x + padding}
+      y={props.y + padding}
+      ref={ref}
+    />
+  )
+})
 
-            const color = Konva.Util.getRandomColor()
+Char.displayName = "Char"
 
-            stage.container().style.backgroundColor = color
-          }}
-          ref={ref}
-        />
-        <Text text={id} fontSize={25} fill={text} x={x} y={y} />
-      </>
-    )
-  }
-)
+export const Tile = forwardRef<Konva.Rect, TileProps>((props, ref) => {
+  return (
+    <Rect
+      id={props.id}
+      x={props.x}
+      y={props.y}
+      width={props.size}
+      height={props.size}
+      fill={props.fill}
+      stroke={props.borders}
+      strokeWidth={10}
+      onMouseEnter={(e) => {
+        //todo: fix. not working
+        const target = e.target
+        const stage = target.getStage()
+
+        if (stage === null) return
+
+        const color = Konva.Util.getRandomColor()
+
+        stage.container().style.backgroundColor = color
+      }}
+      ref={ref}
+    />
+  )
+})
 
 Tile.displayName = "Tile"

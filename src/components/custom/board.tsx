@@ -6,7 +6,7 @@ import { Layer, Stage } from "react-konva"
 
 import { MappingProps } from "@/app/page"
 
-import { Tile } from "./tile"
+import { Char, Tile } from "./tile"
 
 interface BoardProps {
   numberOfTilesPerRow: number
@@ -69,19 +69,29 @@ export function Board({
         >
           <Layer>
             {Array.from(tiles.current.entries()).map(([key, value]) => (
-              <Tile
-                key={key}
-                id={value.props.id}
-                x={value.props.x}
-                y={value.props.y}
-                size={value.props.size}
-                fill={value.props.fill}
-                stroke={value.props.stroke}
-                text={value.props.text}
-                ref={(el) => {
-                  tiles.current.set(key, { ...value, ref: el })
-                }}
-              />
+              <>
+                <Tile
+                  {...value.tiles}
+                  key={key}
+                  id={value.tiles.id}
+                  x={value.tiles.x}
+                  y={value.tiles.y}
+                  size={value.tiles.size}
+                  fill={value.tiles.fill}
+                  borders={value.tiles.borders}
+                  ref={(el) => {
+                    tiles.current.set(key, { ...value, ref: el })
+                  }}
+                />
+                <Char
+                  id={value.chars.id}
+                  x={value.chars.x}
+                  y={value.chars.y}
+                  color={value.chars.color}
+                  fontSize={value.chars.fontSize}
+                  text={value.chars.text}
+                />
+              </>
             ))}
           </Layer>
         </Stage>

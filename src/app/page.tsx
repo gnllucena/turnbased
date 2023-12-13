@@ -4,7 +4,7 @@ import dynamic from "next/dynamic"
 
 import { Board as BoardType } from "../components/custom/board"
 
-const Board = dynamic<React.ReactNode>(
+const Board = dynamic(
   () => import("../components/custom/board").then(({ Board }) => Board),
   {
     ssr: false,

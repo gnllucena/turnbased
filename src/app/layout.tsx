@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
-import { SessionProvider } from "next-auth/react"
+
+// import { SessionProvider } from "next-auth/react"
 
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
@@ -40,16 +41,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontSans.variable
           )}
         >
-          <SessionProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <div className="relative flex min-h-screen flex-col">
-                <div className="flex-1">{children}</div>
-              </div>
-              <TailwindIndicator />
+          {/* <SessionProvider> */}
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="relative flex min-h-screen flex-col">
+              <div className="flex-1">{children}</div>
+            </div>
+            <TailwindIndicator />
 
-              <Toaster />
-            </ThemeProvider>
-          </SessionProvider>
+            <Toaster />
+          </ThemeProvider>
+          {/* </SessionProvider> */}
         </body>
       </html>
     </>

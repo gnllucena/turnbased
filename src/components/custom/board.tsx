@@ -6,8 +6,8 @@ import { Layer, Stage } from "react-konva"
 
 import { Tile } from "./tile"
 
-const NUMBER_OF_ROWS = 20
-const NUMBER_OF_TILES_PER_ROW = 40
+const NUMBER_OF_ROWS = 80
+const NUMBER_OF_TILES_PER_ROW = 80
 const SIZE = 80
 const PADDING = 500
 const PAGE_HEIGHT = NUMBER_OF_ROWS * SIZE + PADDING
@@ -59,16 +59,16 @@ function onWheel(
 }
 
 export function Board() {
-  const container = useRef<HTMLDivElement>(null)
-  const stage = useRef<Konva.default.Stage>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const stageRef = useRef<Konva.default.Stage>(null)
 
   return (
-    <div ref={container} style={{ maxHeight: "10px" }}>
+    <div ref={containerRef} style={{ maxHeight: "10px" }}>
       <Stage
-        ref={stage}
+        ref={stageRef}
         width={PAGE_WIDTH}
         height={PAGE_HEIGHT}
-        onWheel={() => onWheel(container, stage)}
+        onWheel={() => onWheel(containerRef, stageRef)}
       >
         <Layer>{getRows()}</Layer>
       </Stage>

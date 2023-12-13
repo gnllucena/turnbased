@@ -2,7 +2,7 @@
 
 import { MutableRefObject, useRef } from "react"
 import * as Konva from "konva"
-import { Layer, Stage } from "react-konva"
+import { Layer, Stage, Text } from "react-konva"
 
 import { MappingProps } from "@/app/page"
 
@@ -25,12 +25,14 @@ export function Board({
   const stageRef = useRef<Konva.default.Stage>(null)
 
   const PADDING = 500
-  const WIDTH = 3000
-  const HEIGHT = 3000
+  //   const WIDTH = 3000
+  //   const HEIGHT = 3000
+
+  const WIDTH = 9000
+  const HEIGHT = 9000
 
   return (
     <div
-      id="scroll-container"
       ref={containerRef}
       style={{
         width: "calc(100%)",
@@ -40,10 +42,9 @@ export function Board({
       }}
     >
       <div
-        id="large-container"
         style={{
-          width: `${WIDTH}px`,
-          height: `${HEIGHT}px`,
+          width: `${WIDTH + PADDING * 2}px`,
+          height: `${HEIGHT + PADDING * 2}px`,
           overflow: "hidden",
         }}
       >
@@ -78,7 +79,7 @@ export function Board({
           }}
         >
           <Layer>
-            {Array.from(tiles.current.entries()).map(([key, value], index) => (
+            {Array.from(tiles.current.entries()).map(([key, value]) => (
               <Tile
                 key={key}
                 id={value.props.id}

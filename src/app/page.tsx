@@ -1,16 +1,16 @@
 "use client"
 
-import dynamic, { DynamicOptions } from "next/dynamic"
+import dynamic from "next/dynamic"
 
-import { Board } from "../components/custom/board"
+import { Board as BoardType } from "../components/custom/board"
 
-const Component = dynamic<React.ReactNode>(
-  () => import("../components/custom/board").then(({ Board }) => Board as any),
+const Board = dynamic<React.ReactNode>(
+  () => import("../components/custom/board").then(({ Board }) => Board),
   {
     ssr: false,
   }
-) as typeof Board
+) as typeof BoardType
 
 export default function Page() {
-  return <Component />
+  return <Board />
 }

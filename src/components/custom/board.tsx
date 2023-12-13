@@ -1,18 +1,17 @@
 "use client"
 
-import { RefObject, useEffect, useRef } from "react"
+import { RefObject, useRef } from "react"
 import * as Konva from "konva"
 import { Layer, Stage } from "react-konva"
 
 import { Tile } from "./tile"
-import useDimensions from "./use-dimension"
 
 const NUMBER_OF_ROWS = 20
-const NUMBER_OF_TILES_PER_ROW = 30
+const NUMBER_OF_TILES_PER_ROW = 40
 const SIZE = 80
 const PADDING = 500
-const WIDTH = 2500
-const HEIGHT = 60000
+const PAGE_HEIGHT = NUMBER_OF_ROWS * SIZE + PADDING
+const PAGE_WIDTH = NUMBER_OF_TILES_PER_ROW * SIZE + PADDING
 
 function getRows() {
   const rows = []
@@ -42,50 +41,37 @@ function getTiles(rowNumber: number) {
 }
 
 function onWheel(
-  container: RefObject<HTMLDivElement>,
-  stage: RefObject<Konva.default.Stage>
+  containerRef: RefObject<HTMLDivElement>,
+  stageRef: RefObject<Konva.default.Stage>
 ) {
-  const scrollContainer = container.current
-  const canvasStage = stage.current
+  const container = containerRef.current
+  const stage = stageRef.current
 
-  if (scrollContainer === null || canvasStage === null) return
+  if (container === null || stage === null) return
 
-  const dx = scrollContainer.scrollLeft - PADDING
-  const dy = scrollContainer.scrollTop - PADDING
-  console.log("move stage", dx, dy)
+  const dx = container.scrollLeft - PADDING
+  const dy = container.scrollTop - PADDING
 
-  canvasStage.container().style.transform = `translate(${dx}px, ${dy}px)`
+  stage.container().style.transform = `translate(${dx}px, ${dy}px)`
 
-  canvasStage.x(-dx)
-  canvasStage.y(-dy)
-  canvasStage.batchDraw()
+  stage.x(-dx)
+  stage.y(-dy)
 }
 
 export function Board() {
   const container = useRef<HTMLDivElement>(null)
   const stage = useRef<Konva.default.Stage>(null)
 
-  container.current
-
-  const size = useDimensions(PADDING)
-
   return (
-    <div id="scroll-container" ref={container}>
-      <div
-        id="large-container"
-        style={{ width: WIDTH, height: (HEIGHT + PADDING) * 2 }}
+    <div ref={container} style={{ maxHeight: "10px" }}>
+      <Stage
+        ref={stage}
+        width={PAGE_WIDTH}
+        height={PAGE_HEIGHT}
+        onWheel={() => onWheel(container, stage)}
       >
-        <div id="container">
-          <Stage
-            ref={stage}
-            width={size.width}
-            height={size.height}
-            onWheel={() => onWheel(container, stage)}
-          >
-            <Layer>{getRows()}</Layer>
-          </Stage>
-        </div>
-      </div>
+        <Layer>{getRows()}</Layer>
+      </Stage>
     </div>
   )
 }

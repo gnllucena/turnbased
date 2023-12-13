@@ -1,12 +1,12 @@
 "use client"
 
-import { MutableRefObject, useRef, useState } from "react"
+import { MutableRefObject, useRef } from "react"
 import * as Konva from "konva"
 import { Layer, Stage } from "react-konva"
 
 import { MappingProps } from "@/app/page"
 
-import { Tile, TileProps } from "./tile"
+import { Tile } from "./tile"
 
 const PADDING = 500
 

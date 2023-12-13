@@ -71,7 +71,6 @@ export function Board({
             {Array.from(tiles.current.entries()).map(([key, value]) => (
               <>
                 <Tile
-                  {...value.tiles}
                   key={key}
                   id={value.tiles.id}
                   x={value.tiles.x}
